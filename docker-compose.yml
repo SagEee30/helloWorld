@@ -2,7 +2,7 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_ROOT_PASSWORD: 12345679   # <-- root password
       MYSQL_DATABASE: appdb
     volumes:
       - mysqldata:/var/lib/mysql
@@ -17,6 +17,11 @@ services:
 
   app:
     build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: db
+      APP_URL: http://helloworld.test
     volumes:
       - .:/var/www
     networks:

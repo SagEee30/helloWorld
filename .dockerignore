@@ -1,0 +1,34 @@
+# Dependencies (reinstalled in container)
+node_modules
+vendor
+
+# Build outputs
+public/build
+public/hot
+public/storage
+npm-debug.log
+
+# Git and IDE
+.git
+.gitignore
+.idea
+.vscode
+*.swp
+*.swo
+
+# Env and secrets (use env_file or pass at runtime)
+.env
+.env.*
+!.env.example
+
+# Tests and docs
+tests
+phpunit.xml
+.phpunit.result.cache
+*.md
+!README.md
+
+# Misc
+docker-compose*.yml
+.dockerignore
+Makefile
