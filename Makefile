@@ -1,4 +1,4 @@
-.PHONY: setup install migrate fresh dev build test clean run up db-setup docker-setup docker-up docker-down docker-build docker-logs docker-ps docker-restart docker-check docker-key-generate help
+.PHONY: setup install migrate fresh dev build test clean run up db-setup docker-setup docker-up docker-down docker-build docker-logs docker-ps docker-restart docker-check docker-key-generate docker-config-clear help
 
 # Default target: show help
 help:
@@ -79,6 +79,10 @@ db-setup:
 # Generate APP_KEY inside the running Docker app container
 docker-key-generate:
 	docker compose exec app php artisan key:generate --no-interaction
+
+# Clear configuration cache inside the running Docker app container
+docker-config-clear:
+	docker compose exec app php artisan config:clear
 
 # Run database migrations
 migrate:
