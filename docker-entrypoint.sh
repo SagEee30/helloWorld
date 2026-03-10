@@ -2,6 +2,8 @@
 set -e
 
 echo "[entrypoint] Waiting for MySQL..."
+git config --global --add safe.directory /var/www || true
+
 for i in $(seq 1 60); do
   if php -r "
     try {
@@ -44,7 +46,7 @@ chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 chmod -R 775 storage bootstrap/cache 2>/dev/null || true
 
 echo "[entrypoint] Running migrations..."
-php artisan migrate --force
+php artisan migrate --force || echo "[entrypoint] Migration failed or already up to date."
 
 echo "[entrypoint] Starting PHP-FPM..."
 exec php-fpm

@@ -34,7 +34,7 @@ help:
 # ------------------------------------------------------------------------------
 up: docker-setup
 	@echo "[make] Building app image..."
-	@docker compose build --no-cache app
+	@docker compose build app
 	@echo "[make] Starting db, app, nginx..."
 	@docker compose up -d
 	@echo ""

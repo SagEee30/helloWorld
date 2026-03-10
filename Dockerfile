@@ -17,13 +17,13 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
-        pdo_mysql \
-        mbstring \
-        exif \
-        pcntl \
-        bcmath \
-        gd \
-        zip \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    zip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -42,5 +42,12 @@ RUN sed -i 's/listen = .*/listen = 0.0.0.0:9000/' /usr/local/etc/php-fpm.d/www.c
 # Expose PHP-FPM port
 EXPOSE 9000
 
-# Start PHP-FPM
-CMD ["php-fpm"]
+# Copy and configure entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Fix line endings in case of Windows repository checkout
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh
+
+# Start the entrypoint
+ENTRYPOINT ["docker-entrypoint.sh"]
