@@ -1,4 +1,4 @@
-.PHONY: setup install migrate fresh dev build test clean run up db-setup docker-setup docker-up docker-down docker-build docker-logs docker-ps docker-restart docker-check help
+.PHONY: setup install migrate fresh dev build test clean run up db-setup docker-setup docker-up docker-down docker-build docker-logs docker-ps docker-restart docker-check docker-key-generate help
 
 # Default target: show help
 help:
@@ -75,6 +75,10 @@ db-setup:
 	@sed -i 's/^.*DB_PASSWORD=.*/DB_PASSWORD=123456789/' .env
 	@php artisan key:generate --no-interaction 2>/dev/null || true
 	@echo "Local MySQL database configured (non-Docker)."
+
+# Generate APP_KEY inside the running Docker app container
+docker-key-generate:
+	docker compose exec app php artisan key:generate --no-interaction
 
 # Run database migrations
 migrate:
