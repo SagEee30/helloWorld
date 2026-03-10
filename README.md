@@ -66,6 +66,22 @@ This usually occurs during the first boot while dependencies are still installin
 ### Git Ownership Error
 If you see "detected dubious ownership", don't worry—the `docker-entrypoint.sh` now automatically fixes this by adding `/var/www` to the safe directory list.
 
+### Laravel Config / APP_KEY Errors
+If you see errors like missing `APP_KEY` or unexpected configuration values:
+
+- **Clear the Laravel config cache inside Docker**:
+
+  ```bash
+  docker compose exec app php artisan config:clear
+  ```
+
+- **If the error persists**, restart the stack:
+
+  ```bash
+  make docker-down
+  make run
+  ```
+
 
 ## ✨ Features
 - **One-Command Setup**: Zero manual configuration required.
